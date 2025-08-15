@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#141826">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <title>ВЭФ 2025 — Инвентарь (PWA)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-logo"><img src="icons/icon-192.png" alt="logo" width="26" height="26"></div>
+        <h1>ВЭФ 2025 — Инвентарь</h1>
+      </div>
+      <div class="toolbar">
+        <button id="btn-install" class="btn-secondary">Установить как приложение</button>
+        <button id="btn-export" class="btn">Экспорт JSON</button>
+        <label class="btn-secondary" for="file-import" style="cursor:pointer">Импорт JSON</label>
+        <input id="file-import" type="file" accept="application/json" style="display:none">
+        <button id="btn-clear-cache" class="btn-danger">Сброс offline</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="search">
+          <input type="text" id="search" placeholder="Поиск по объектам…">
+        </div>
+        <div id="objects" class="grid-objects" aria-live="polite"></div>
+      </div>
+
+      <div class="card">
+        <div class="search">
+          <input type="text" id="filter" placeholder="Фильтр по таблице (любой столбец)…">
+          <button id="btn-add-row" class="btn-success">Добавить строку</button>
+          <button id="btn-add-col" class="btn-small btn-secondary">Добавить столбец</button>
+          <button id="btn-rename-col" class="btn-small btn-secondary">Переименовать столбец</button>
+          <button id="btn-del-col" class="btn-small btn-danger">Удалить столбец</button>
+          <div class="view-switch">
+            <button id="btn-view-cards" class="btn-small btn-secondary">Карточки</button>
+            <button id="btn-view-table" class="btn-small btn-secondary">Таблица</button>
+            <button id="btn-view-tiles" class="btn-small btn-secondary">Плитки объектов</button>
+          </div>
+          <button id="btn-object-col" class="btn-small btn-secondary">Выбрать столбец объектов</button>
+        </div>
+
+        <div class="card hidden" id="object-detail">
+          <div class="search" style="justify-content:space-between;align-items:center">
+            <div style="font-weight:700" id="object-title">Объект</div>
+            <button id="btn-back-to-tiles" class="btn-small btn-secondary">Назад к объектам</button>
+          </div>
+          <div class="cards-toolbar"><span class="small">Щёлкайте +/- чтобы менять количество. Серийник редактируется в поле ниже. Сохраняется офлайн.</span></div>
+          <div class="cards-grid" id="object-items"></div>
+        </div>
+
+        <div class="cards-toolbar hidden" id="cards-toolbar">
+          <span class="small">Редактируйте значения прямо в карточках — сохраняется автоматически офлайн.</span>
+        </div>
+        <div class="cards-grid hidden" id="cards-grid"></div>
+
+        <div class="table-wrap" id="table-wrap">
+          <table id="data-table" aria-describedby="caption">
+            <thead id="thead"></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <div class="small" style="margin-top:8px">Подсказки: двойной клик по ячейке — редактирование. <span class="kbd">Ctrl+S</span> — сохранение не нужно, всё пишется в IndexedDB.</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'));}</script>
+</body>
+</html>
